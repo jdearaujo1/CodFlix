@@ -57,4 +57,24 @@ public class UserDao {
 
         return user;
     }
+
+    public User getUserByEmail(String email) {
+        User user = null;
+
+        Connection connection = Database.get().getConnection();
+        try {
+            PreparedStatement st = connection.prepareStatement("SELECT * FROM user WHERE email=?");
+
+            st.setString(1, email);
+
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                user = mapToUser(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
 }

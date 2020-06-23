@@ -1,6 +1,7 @@
 package com.codflix.backend.features.user;
 
 import com.codflix.backend.core.Conf;
+import com.codflix.backend.core.Database;
 import com.codflix.backend.core.Template;
 import com.codflix.backend.models.User;
 import com.codflix.backend.utils.URLUtils;
@@ -10,6 +11,10 @@ import spark.Request;
 import spark.Response;
 import spark.Session;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,8 +55,49 @@ public class AuthController {
     }
 
     public String signUp(Request request, Response response) {
-        Map<String, Object> model = new HashMap<>();
-        return Template.render("auth_signup.html", model);
+        if (request.requestMethod().equals("GET")) {
+            Map<String, Object> model = new HashMap<>();
+            return Template.render("auth_signup.html", model);
+        }
+
+        Connection connection = Database.get().getConnection();
+
+        // Get parameters
+        Map<String, String> query = URLUtils.decodeQuery(request.body());
+        String email = query.get("email");
+        String password = query.get("password");
+        String password_confirm = query.get("password_confirm");
+
+        if(!password.equals(password_confirm)) {
+            logger.info("Password does not match. Please try again");
+            response.redirect("/signup");
+            return "KO";
+        }
+
+        User user = userDao.getUserByEmail(email);
+        if (user != null) {
+            logger.info("User already exists. Choose another email address");
+            response.redirect("/signup");
+            return "KO";
+        }
+
+        // Redirect to login page
+        try {
+            PreparedStatement st = connection.prepareStatement("INSERT INTO user (email, password) VALUES (?, ?)");
+
+            logger.info(email + password);
+
+            st.setString(1, email);
+            st.setString(2, password);
+
+            st.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        response.redirect(Conf.ROUTE_LOGIN);
+        return "OK";
     }
 
     public String logout(Request request, Response response) {
