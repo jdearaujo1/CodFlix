@@ -33,6 +33,7 @@
     padding: 8px 20px;
     text-align: center;
 }
+
 .media-list .item .title:after {
     content: "";
     display: block;
@@ -40,6 +41,18 @@
 
     border-bottom: 1px solid var(--color-red);
     margin: 10px auto 0 auto;
+}
+
+.media-list .item .undertitle {
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+}
+
+.media-list .item .undertitle:after {
+    content: "";
+    display: block;
+    width: 20px;
 }
 
 .media-list .item:hover {

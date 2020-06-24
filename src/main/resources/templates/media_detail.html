@@ -2,7 +2,27 @@
 #@mainLayout()
 Medias
 
-<h1>Media Detail</h1>
-<div>$media.getTitle()</div>
-
+<h1>$media.getTitle()</h1>
+#if( $media.getType() == "movie" )
+<h2>Movie</h2>
+#else
+<div class="media-list">
+    #foreach($episode in $episodes)
+    <a class="item">
+        <div class="video">
+            <div>
+                <iframe allowfullscreen="" frameborder="0"
+                        src="$episode.getEpisodeUrl()"></iframe>
+            </div>
+        </div>
+        <div class="title">
+            $episode.getTitle()
+        </div>
+        <div class="undertitle">
+            Épisode $episode.getEpisodeNumber()
+        </div>
+    </a>
+    #end
+</div>
+#end
 #end

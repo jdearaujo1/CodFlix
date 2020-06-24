@@ -1,10 +1,11 @@
 package com.codflix.backend.features.media;
 
 import com.codflix.backend.core.Template;
+import com.codflix.backend.features.episode.EpisodeDao;
+import com.codflix.backend.models.Episode;
 import com.codflix.backend.models.Media;
 import spark.Request;
 import spark.Response;
-import spark.Session;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.Map;
 
 public class MediaController {
     private final MediaDao mediaDao = new MediaDao();
+    private final EpisodeDao episodeDao = new EpisodeDao();
 
     public String list(Request request, Response response) {
         List<Media> medias;
@@ -31,9 +33,18 @@ public class MediaController {
 
     public String detail(Request request, Response res) {
         int id = Integer.parseInt(request.params(":id"));
+        int season = Integer.parseInt(request.params(":season"));
+
         Media media = mediaDao.getMediaById(id);
+        List<Episode> episodes;
 
         Map<String, Object> model = new HashMap<>();
+
+        if (media.getType().equals("serie")) {
+            episodes = episodeDao.getAllEpisodes(media.getId());
+            model.put("episodes", episodes);
+        }
+
         model.put("media", media);
         return Template.render("media_detail.html", model);
     }
