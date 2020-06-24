@@ -1,11 +1,21 @@
 #parse("dashboard.html")
 #@mainLayout()
-Medias
+
+#set($start = 0)
+#set($end = $seasonNumber - 1)
+#set($range = [$start..$end])
 
 <h1>$media.getTitle()</h1>
 #if( $media.getType() == "movie" )
 <h2>Movie</h2>
 #else
+<div class="media-list">
+    #foreach($i in $range)
+    <a href="/medias/$media.getId()/$velocityCount">
+        <button type="button" class="button5">Saison $velocityCount</button>
+    </a>
+    #end
+</div>
 <div class="media-list">
     #foreach($episode in $episodes)
     <a class="item">

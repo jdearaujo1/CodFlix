@@ -13,6 +13,28 @@ import java.util.List;
 
 public class EpisodeDao {
 
+    public List<Episode> getEpisodesByIdAndBySeason(int mediaId, int season) {
+        List<Episode> episodes = new ArrayList<>();
+
+        Connection connection = Database.get().getConnection();
+        try {
+            PreparedStatement st = connection.prepareStatement("SELECT * FROM episode WHERE media_id=? AND season_number=? ORDER BY episode_number ASC");
+
+            st.setInt(1, mediaId);
+            st.setInt(2, season);
+
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                episodes.add(mapToEpisode(rs));
+            }
+        } catch (SQLException | ParseException e) {
+            e.printStackTrace();
+        }
+
+        return episodes;
+    }
+
     public List<Episode> getAllEpisodes(int mediaId) {
         List<Episode> episodes = new ArrayList<>();
 
@@ -34,6 +56,7 @@ public class EpisodeDao {
         return episodes;
     }
 
+
     private Episode mapToEpisode(ResultSet rs) throws SQLException, ParseException {
         return new Episode(
                 rs.getInt(1), // id
@@ -44,4 +67,5 @@ public class EpisodeDao {
                 rs.getInt(6) // media_id
         );
     }
+
 }
