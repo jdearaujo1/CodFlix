@@ -5,6 +5,9 @@
 #set($end = $seasonNumber - 1)
 #set($range = [$start..$end])
 
+<input id="userId" type="hidden" value="$user.getId()">
+<input id="mediaId" type="hidden" value="$media.getId()">
+
 <h1>$media.getTitle()</h1>
 #if( $media.getType() == "movie" )
 <h2>Movie</h2>
@@ -12,6 +15,7 @@
 <div class="media-list">
     #foreach($i in $range)
     <a href="/medias/$media.getId()/$velocityCount">
+        <!--        Velocity count = each iteration of the for loop-->
         <button type="button" class="button5">Saison $velocityCount</button>
     </a>
     #end
@@ -21,8 +25,12 @@
     <a class="item">
         <div class="video">
             <div>
-                <iframe allowfullscreen="" frameborder="0"
-                        src="$episode.getEpisodeUrl()"></iframe>
+                <!--  ToDo: Change the startTime, use a IF startTime == 0 ajouter l'épisode sans start time
+                        Else ajouter l'épisode avec start time donc 2 iframe (un dans chaque IF)-->
+
+                <iframe id="player" allowfullscreen="" frameborder="0"
+
+                        src="$episode.getEpisodeUrl()?start=200&enablejsapi=1"></iframe>
             </div>
         </div>
         <div class="title">
@@ -34,5 +42,8 @@
     </a>
     #end
 </div>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="/js/youtube.js"></script>
 #end
 #end

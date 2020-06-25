@@ -2,10 +2,13 @@ package com.codflix.backend.features.media;
 
 import com.codflix.backend.core.Template;
 import com.codflix.backend.features.episode.EpisodeDao;
+import com.codflix.backend.features.user.UserDao;
 import com.codflix.backend.models.Episode;
 import com.codflix.backend.models.Media;
+import com.codflix.backend.models.User;
 import spark.Request;
 import spark.Response;
+import spark.Session;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -15,6 +18,7 @@ import java.util.Map;
 public class MediaController {
     private final MediaDao mediaDao = new MediaDao();
     private final EpisodeDao episodeDao = new EpisodeDao();
+    private final UserDao userDao = new UserDao();
 
     public String list(Request request, Response response) {
         List<Media> medias;
@@ -53,8 +57,18 @@ public class MediaController {
             //Get the total number of seasons.
             Episode episode = episodeDao.getAllEpisodes(media.getId()).stream().max(Comparator.comparing(Episode::getSeasonNumber)).get();
 
+
             model.put("seasonNumber", episode.getSeasonNumber());
             model.put("episodes", episodes);
+        }
+
+        Session session = request.session();
+
+        String userIdStr = session.attribute("user_id").toString();
+        if (userIdStr != null && !userIdStr.isEmpty()) {
+            int userId = Integer.parseInt(userIdStr);
+            User user = userDao.getUserById(userId);
+            model.put("user", user);
         }
 
         model.put("media", media);

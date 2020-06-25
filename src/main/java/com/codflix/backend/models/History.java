@@ -19,10 +19,10 @@ public class History {
 
     @Override
     public String toString() {
-        return "StreamHistory{" +
+        return "History{" +
                 "id=" + id +
                 ", userId=" + userId +
-                ", streamId=" + mediaId +
+                ", mediaId=" + mediaId +
                 ", startDate='" + startDate + '\'' +
                 ", endDate='" + endDate + '\'' +
                 ", watchDuration=" + watchDuration +

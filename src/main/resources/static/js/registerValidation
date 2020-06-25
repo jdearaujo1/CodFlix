@@ -1,0 +1,14 @@
+const URL = "http://localhost:8080/";
+
+function sendEmail(email, uuid) {
+    Email.send({
+        SecureToken: '/',
+        To: email,
+        From: '/',
+        Subject: document.getElementById("subject").value,
+        Body: "Veuillez cliquer sur le lien pour valider votre compte : " + URL + uuid + " !",
+    })
+}
+
+//ToDo: AJAX Call to change the status of the account
+// Add the "activated" column in DB.

@@ -52,6 +52,9 @@ public class App {
         Spark.get("/medias/", (req, res) -> media.list(req, res));
         Spark.get("/histories/", (req, res) -> history.list(req, res));
 
+        Spark.post("/histories/create", (req, res) -> history.create(req, res));
+        Spark.post("/histories/update", (req, res) -> history.update(req, res));
+
         Spark.get("/", (req, res) -> home.home(req, res));
 
         Spark.get("/contact", (req, res) -> contact.home(req, res));
