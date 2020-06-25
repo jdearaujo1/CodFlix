@@ -63,7 +63,7 @@ function updateInDatabase() {
 
     $.ajax({
         url: "/histories/update",
-        //ToDo: POST pour un update ?
+        //ToDo: POST for an update ? Maybe an error here.
         type: "POST",
         data: myJSONObject,
     });
@@ -72,8 +72,3 @@ function updateInDatabase() {
 window.onbeforeunload = function () {
     updateInDatabase();
 };
-
-// ToDo :stocker temps en bdd appel Ajax
-//  si temps > temps total vidéo, temps total video + temps total video +1 etc..
-//  Si temps < temps total video
-//  -> ajouter le tag résume a la fin de la vidéo
