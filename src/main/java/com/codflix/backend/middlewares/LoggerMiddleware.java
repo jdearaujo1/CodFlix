@@ -17,6 +17,7 @@ public class LoggerMiddleware implements Middleware {
     public void process(Request request, Response response) {
         String log = request.requestMethod() +
                 " " + request.url() +
+                " " + response.status() +
                 " " + request.body();
         logger.info(log);
     }
