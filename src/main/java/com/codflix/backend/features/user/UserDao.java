@@ -77,4 +77,25 @@ public class UserDao {
 
         return user;
     }
+
+    public boolean checkIfUserExists(String email) {
+        boolean userExists = false;
+
+        Connection connection = Database.get().getConnection();
+        try {
+            PreparedStatement st = connection.prepareStatement("SELECT * FROM user WHERE email=?");
+
+            st.setString(1, email);
+
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                userExists = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return userExists;
+    }
+
 }

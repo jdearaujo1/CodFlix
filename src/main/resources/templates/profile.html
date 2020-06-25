@@ -1,0 +1,73 @@
+#parse("dashboard.html")
+#@mainLayout()
+
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center">Modifier mon adresse mail</h1>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="uniqueId" class="text-black">Identifiant unique :</label>
+            <input type="text" class="form-control" id="uniqueId"
+                   value="$user.getId()" disabled="disabled">
+        </div>
+
+        <div class="form-group">
+            <label for="email" class="text-black">Addresse mail :</label>
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                   placeholder="$user.getEmail()">
+        </div>
+
+        <div class="form-group">
+            <label for="pass" class="text-black">Mot de passe :</label>
+            <input type="password" class="form-control" id="pass"
+                   placeholder="Entrez ancien mot de passe ...">
+        </div>
+
+        <div class="text-center">
+            <button type="button" onclick="updateEmail()" class="btn btn-danger">Modifier mon adresse mail</button>
+        </div>
+
+        <hr style="background-color: black">
+
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center">Modifier mon mot de passe</h1>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="oldPassword" class="text-black">Ancien mot de passe :</label>
+            <input type="password" class="form-control" id="oldPassword"
+                   placeholder="Entrez votre ancien mot de passe ...">
+        </div>
+
+        <div class="form-group">
+            <label for="newPassword" class="text-black">Nouveau de mot de passe :</label>
+            <input type="password" class="form-control" id="newPassword" placeholder="Nouveau mot de passe ...">
+        </div>
+
+        <div class="form-group">
+            <label for="confirmPassword" class="text-black">Confirmer le nouveau de mot de passe :</label>
+            <input type="password" class="form-control" id="confirmPassword"
+                   placeholder="Confirmer le nouveau mot de passe...">
+        </div>
+
+
+        <div class="text-center">
+            <button type="button" onclick="updatePassword()" class="btn btn-danger">Modifier mon mot de passe</button>
+        </div>
+    </div>
+</div>
+<style>
+    textarea {
+        resize: none;
+    }
+</style>
+
+
+<script src="/js/profile.js"></script>
+
+#end

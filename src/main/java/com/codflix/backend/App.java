@@ -8,6 +8,7 @@ import com.codflix.backend.features.genre.GenreController;
 import com.codflix.backend.features.history.HistoryController;
 import com.codflix.backend.features.media.MediaController;
 import com.codflix.backend.features.other.HomeController;
+import com.codflix.backend.features.profile.ProfileController;
 import com.codflix.backend.features.user.AuthController;
 import com.codflix.backend.middlewares.AuthMiddleware;
 import com.codflix.backend.middlewares.LoggerMiddleware;
@@ -34,6 +35,7 @@ public class App {
         MediaController media = new MediaController();
         HistoryController history = new HistoryController();
         ContactController contact = new ContactController();
+        ProfileController profile = new ProfileController();
 
         // Routes
         // Every request should be mapped here to a controller method
@@ -53,6 +55,10 @@ public class App {
         Spark.get("/", (req, res) -> home.home(req, res));
 
         Spark.get("/contact", (req, res) -> contact.home(req, res));
+
+        Spark.get("/profile", (req, res) -> profile.home(req, res));
+        Spark.post("/profile/updateEmail", (req, res) -> profile.updateEmail(req, res));
+        Spark.post("/profile/updatePassword", (req, res) -> profile.updatePassword(req, res));
     }
 
     private static void initializeServer() {

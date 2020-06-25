@@ -6,6 +6,7 @@ function sendEmail() {
         Subject: document.getElementById("subject").value,
         Body: document.getElementById("message").value,
     }).then(
-        alert("Email Sent")
+        alert("Nous avons bien reçu votre demande de contact !\n" +
+            "Vous recevrez une réponse dans les meilleurs délais.")
     );
 }
